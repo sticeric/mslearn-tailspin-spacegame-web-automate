@@ -43,76 +43,12 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Sql/servers",
-            "apiVersion": "2015-05-01-preview",
-            "name": "[concat(parameters('servers_tailspin_space_game_sql_name'), variables('uniqueName'))]",
-            "location": "[parameters('location')]",
-            "kind": "v12.0",
-            "properties": {
-                "administratorLogin": "azuresql",
-                "administratorLoginPassword": "[parameters('adminPassword')]",
-                "version": "12.0"
-            }
-        },
-
-        {
-            "type": "Microsoft.Sql/servers/firewallRules",
-            "apiVersion": "2015-05-01-preview",
-            "name": "[concat(concat(parameters('servers_tailspin_space_game_sql_name'), variables('uniqueName')), '/AllowAllWindowsAzureIps')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', concat(parameters('servers_tailspin_space_game_sql_name'), variables('uniqueName')))]"
-            ],
-            "properties": {
-                "startIpAddress": "0.0.0.0",
-                "endIpAddress": "0.0.0.0"
-            }
-        },
-        {
             "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(parameters('keyVaultName'),'/firstRun')]",
             "apiVersion": "2015-06-01",
             "properties": {
                 "value": "false"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', concat(parameters('servers_tailspin_space_game_sql_name'), variables('uniqueName')), 'tailspindatabase')]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases",
-            "apiVersion": "2017-03-01-preview",
-            "name": "[concat(concat(parameters('servers_tailspin_space_game_sql_name'), variables('uniqueName')), '/tailspindatabase')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', concat(parameters('servers_tailspin_space_game_sql_name'), variables('uniqueName')))]"
-            ],
-            "sku": {
-                "name": "S1",
-                "tier": "Standard"
-            },
-            "kind": "v12.0,user,vcore",
-            "properties": {
-                "collation": "SQL_Latin1_General_CP1_CI_AS",
-                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
-                "zoneRedundant": false
-            },
-            "resources": [{
-                "name": "Import",
-                "type": "extensions",
-                "apiVersion": "2014-04-01",
-                "condition": "[equals(parameters('firstRun'), 'true')]",
-                "dependsOn": [
-                    "[resourceId('Microsoft.Sql/servers/databases', concat(parameters('servers_tailspin_space_game_sql_name'), variables('uniqueName')), 'tailspindatabase')]"
-                ],
-                "properties": {
-                    "storageKeyType": "SharedAccessKey",
-                    "storageKey": "?",
-                    "storageUri": "https://sqldbtutorial.blob.core.windows.net/bacpacs/tailspindatabase.bacpac",
-                    "administratorLogin": "azuresql",
-                    "administratorLoginPassword": "[parameters('adminPassword')]",
-                    "operationMode": "Import"
-                }
-            }]
+            }
         }
     ],
     "outputs": {}
