@@ -45,10 +45,9 @@
 
 						{
 							"type": "Microsoft.KeyVault/vaults/secrets",
-							"name": "[concat(variables('keyVaultName'), '/', variables('/firstRun'))]",
-							"apiVersion": "2018-02-14",
+							"name": "[concat(parameters('keyVaultName'),'/firstRun')]",
+							"apiVersion": "2015-06-01",
 							"properties": {
-								"contentType": "Secret",
 								"value": "false"
 							}
 						}
