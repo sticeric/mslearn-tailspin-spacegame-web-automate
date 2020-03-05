@@ -6,7 +6,6 @@ variables:
 
 stages:
 - stage: 'Build'
-  condition: eq(False, True)
   displayName: 'Build the web application'
   jobs: 
   - job: 'Build'
@@ -19,6 +18,13 @@ stages:
     variables:
       wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
       dotnetSdkVersion: '3.1.100'
+
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
+      inputs:
+        version: '$(dotnetSdkVersion)'
+
 - stage: 'Provision'
   displayName: 'Provision the database and web application'
   jobs: 
@@ -44,6 +50,7 @@ stages:
         deploymentOutputs: ResourceGroupDeploymentOutputs
 
 - stage: DBAVerificationScript
+  condition: eq(False, True)
   displayName: 'Script database schema changes'
   dependsOn: Build
   jobs:
