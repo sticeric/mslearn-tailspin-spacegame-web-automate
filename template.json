@@ -43,10 +43,10 @@
     },
     "resources": [
         {
-			"resourceGroup": "NetworkWatcherRG",
             "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(parameters('keyVaultName'),'/firstRun')]",
             "apiVersion": "2015-06-01",
+			"resourceGroup": "NetworkWatcherRG",
 			"location": "eastus",
             "properties": {
                 "value": "false"
