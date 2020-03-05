@@ -6,6 +6,7 @@ variables:
 
 stages:
 - stage: 'Build'
+  condition: eq(False, True)
   displayName: 'Build the web application'
   jobs: 
   - job: 'Build'
@@ -120,7 +121,7 @@ stages:
 
 - stage: DBAVerificationScript
   displayName: 'Script database schema changes'
-  dependsOn: Provision
+  dependsOn: Build
   jobs:
   - deployment: DBAVerificationScript
     pool:
