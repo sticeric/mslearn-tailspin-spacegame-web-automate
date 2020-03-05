@@ -43,10 +43,7 @@
     },
     "resources": [
         {
-            "reference": {
-              "keyVault": {
-                "id": "/subscriptions/364b3676-e656-4e3a-9e7b-523d15bc6385/resourceGroups/NetworkWatcherRG/providers/Microsoft.KeyVault/vaults/mylab126"
-              },	
+			"resourceGroup": "NetworkWatcherRG",
             "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(parameters('keyVaultName'),'/firstRun')]",
             "apiVersion": "2015-06-01",
