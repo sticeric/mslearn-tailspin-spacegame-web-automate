@@ -5,8 +5,20 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
+- stage: 'Build'
+  condition: eq(False, True)
+  displayName: 'Build the web application'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build job'
+    pool:
+      vmImage: 'ubuntu-16.04'
+      demands:
+        - npm
 
-
+    variables:
+      wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
+      dotnetSdkVersion: '3.1.100'
 - stage: 'Provision'
   displayName: 'Provision the database and web application'
   jobs: 
